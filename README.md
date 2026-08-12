@@ -1,16 +1,23 @@
 # Case de Engenharia de Dados — Reclamações BACEN + Bancos + Glassdoor
 
+- **Antonio Daniel de Souza Linhares**
+- **Yuri Alexandre Barbosa Rodrigues**
+- **Hercules Ramos Veloso de Freitas**
+- 
+
+
+
 Pipeline de ingestão e tratamento de dados em **Python** (pandas), com carga
 em um **banco de dados relacional open source (PostgreSQL)**, organizado em
 três camadas de processamento: **RAW → Trusted → Delivery**.
 
 ## Bases de origem (pasta `Dados.zip`)
 
-| Base | Arquivo(s) | Conteúdo |
-|---|---|---|
-| Reclamações | `Reclamações/*.csv` (8 arquivos trimestrais, 2021-2022) | Ranking de reclamações contra instituições financeiras, divulgado pelo Banco Central |
-| Bancos | `Bancos/EnquadramentoInicia_v2.tsv` | Enquadramento (segmento prudencial S1-S5) de cada instituição, por CNPJ |
-| Empregados | `Empregados/glassdoor_consolidado_join_match_v2.csv` e `..._match_less_v2.csv` | Avaliações de funcionários (Glassdoor) das instituições |
+| Base        | Arquivo(s)                                                                     | Conteúdo                                                                             |
+| ----------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| Reclamações | `Reclamações/*.csv` (8 arquivos trimestrais, 2021-2022)                        | Ranking de reclamações contra instituições financeiras, divulgado pelo Banco Central |
+| Bancos      | `Bancos/EnquadramentoInicia_v2.tsv`                                            | Enquadramento (segmento prudencial S1-S5) de cada instituição, por CNPJ              |
+| Empregados  | `Empregados/glassdoor_consolidado_join_match_v2.csv` e `..._match_less_v2.csv` | Avaliações de funcionários (Glassdoor) das instituições                              |
 
 > Observação: o arquivo `2022_tri_02_nao_ha_dados.csv` está vazio — o Banco
 > Central não divulgou ranking nesse trimestre — e é ignorado na ingestão.
@@ -118,6 +125,7 @@ Isso é equivalente a rodar, em sequência:
 
 `delivery.tb_reclamacoes_bancos_funcionarios` — granularidade **banco x
 trimestre**: 703 linhas, 40 colunas, reunindo:
+
 - indicadores de reclamações (índice, quantidades por categoria) — BACEN
 - segmento prudencial e nome oficial do banco — enquadramento
 - avaliações de funcionários (notas, % recomendação, etc.) — Glassdoor,
