@@ -213,8 +213,15 @@ def tratar_reclamacoes(df_raw: pd.DataFrame, bancos: pd.DataFrame) -> pd.DataFra
     df["cnpj_origem"] = pd.NA
     df.loc[df["tipo"] == "Banco/financeira", "cnpj_origem"] = "direto (CNPJ na origem)"
     df.loc[mascara_conglomerado & df["cnpj_resolvido"].notna() & df["nome_norm_fuzzy_score"].isna(), "cnpj_origem"] = "resolvido pelo nome do conglomerado (match exato)"
+    # Garante que a coluna de score seja numérica antes de converter para Int64.
+    # `resolver_pendentes_por_fuzzy` pode retornar o score como object (str, float,
+    # ou até valores inválidos), o que faz o astype("Int64") direto falhar com
+    # "cannot safely cast non-equivalent object to int64". Usamos pd.to_numeric
+    # com errors="coerce" para converter o que for possível e transformar o
+    # restante em NaN, que o Int64 sabe representar como <NA>.
+    score_numerico = pd.to_numeric(df["nome_norm_fuzzy_score"], errors="coerce").round().astype("Int64")
     df.loc[mascara_conglomerado & df["nome_norm_fuzzy_score"].notna(), "cnpj_origem"] = (
-        "resolvido pelo nome do conglomerado (fuzzy match, score=" + df["nome_norm_fuzzy_score"].astype("Int64").astype(str) + ")"
+        "resolvido pelo nome do conglomerado (fuzzy match, score=" + score_numerico.astype(str) + ")"
     )
     df.loc[mascara_conglomerado & df["cnpj_resolvido"].isna(), "cnpj_origem"] = "nao encontrado (ex.: fintechs/IPs fora do enquadramento de Bancos)"
 
@@ -508,4 +515,3 @@ def main():
 # Se o script for executado diretamente, chama a função main
 if __name__ == "__main__":
     main()
-```

@@ -164,4 +164,3 @@ resource "docker_container" "python_app" {
   attach   = false   # Não anexa a saída do container ao terminal (execução em background)
   logs     = true    # Permite capturar logs do container
 }
-```

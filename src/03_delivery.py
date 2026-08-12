@@ -170,4 +170,3 @@ def main():
 # Se o script for executado diretamente, chama a função main
 if __name__ == "__main__":
     main()
-```
