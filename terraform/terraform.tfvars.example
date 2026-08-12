@@ -1,0 +1,12 @@
+# Copie para terraform.tfvars e ajuste se quiser valores diferentes dos
+# defaults (que já batem com src/db.py e com o Dockerfile do projeto).
+
+# db_admin_user      = "postgres"
+# db_admin_password  = "postgres"
+# db_name            = "case_dados"
+# db_port            = 5432
+
+# project_path       = ".."              # raiz do projeto (onde ficam Dockerfile, src/, data/)
+# python_image_name  = "case_dados_pipeline:latest"
+
+# run_pipeline_on_apply = true  # false = container Python só fica de pé, sem rodar o pipeline sozinho
